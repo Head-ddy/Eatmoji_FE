@@ -72,14 +72,13 @@ export default function Login() {
             >
               로그인하기
             </button>
-
-            <p className={style.linkText}>
+          </form>
+          <p className={style.linkText}>
               아직 계정이 없으신가요?{" "}
               <button type="button" onClick={goToSignUp} className={style.linkTextButton}>
                 회원가입
               </button>
             </p>
-          </form>
         </div>
       </div>
     </>
