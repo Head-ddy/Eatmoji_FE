@@ -11,7 +11,7 @@ export default function Layout({ children } : { children: ReactNode }) {
       <main className={style.main}>{children}</main>
 
       <nav className={style.nav}>
-        <Link href="/todaymenu" className={`${style.link} ${pathname === '/search' ? style.active : ''}`}>오늘의 메뉴</Link>
+        <Link href="/todaymenu" className={`${style.link} ${pathname === '/todaymenu' ? style.active : ''}`}>오늘의 메뉴</Link>
         <Link href="/" className={`${style.link} ${pathname === '/' ? style.active : ''}`}>홈</Link>
         <Link href="/mypage" className={`${style.link} ${pathname === '/mypage' ? style.active : ''}`}>마이페이지</Link>
       </nav>
