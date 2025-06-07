@@ -1,0 +1,12 @@
+.sharedContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 411px;
+  min-height: 100vh;
+  padding-left: 65px;
+  padding-right: 65px;
+  flex-shrink: 0;
+  background-color: #FAF8F2;
+}

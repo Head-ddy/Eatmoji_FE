@@ -1,0 +1,106 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.logo {
+  width: 180px;
+  height: 145px;
+  flex-shrink: 0;
+  margin-bottom: 2rem;
+  animation: froggyJump 2s ease-in-out 3;
+  animation-delay: 1s;
+}
+
+.logo:hover {
+  animation: wiggle 3s ease-in-out infinite;
+}
+
+@media (hover: hover) {
+  .logo:hover {
+    animation: wiggle 3s ease-in-out infinite;
+  }
+}
+
+@keyframes froggyJump {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  30% {
+    transform: translateY(-70px) scale(1.03);
+  }
+  50% {
+    transform: translateY(10px) scale(0.97);
+  }
+  85% {
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes wiggle {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(3deg);
+  }
+  75% {
+    transform: rotate(-3deg);
+  }
+}
+
+.title {
+  font-size: 30px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+.subtitle {
+  font-size: 20px;
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+.emoji {
+  font-size: 2rem;
+  animation: bounce 1.5s ease-in-out infinite;
+  animation-delay: 1s;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.button {
+  margin-top: 2rem;
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  background-color: #57c278;
+  color: white;
+  border: none;
+  border-radius: 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.button:hover {
+  background-color: #4ab36a;
+  transform: translateY(-2px);
+}
+
+.button:active {
+  transform: translateY(1px);
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+}

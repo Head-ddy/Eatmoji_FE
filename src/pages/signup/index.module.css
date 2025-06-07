@@ -1,0 +1,143 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem; /* gap-6 */
+  min-height: 103vh;
+  font-family: 'Inter', sans-serif;
+  padding-left: 1rem;  /* px-4 */
+  padding-right: 1rem;
+}
+
+.logo {
+  width: 180px;
+  height: 145px;
+  flex-shrink: 0;
+}
+
+.card {
+  padding: 2rem; /* 8 * 4px */
+  border-radius: 1rem; /* rounded-2xl */
+  width: 100%;
+  max-width: 24rem; /* max-w-sm */
+}
+
+.title {
+  font-size: 1.5rem; /* text-2xl */
+  font-weight: 700; /* font-bold */
+  font-family: "Roboto", sans-serif;
+  margin-bottom: 1rem; /* mb-4 */
+  text-align: center;
+}
+
+.subtitle {
+  font-size: 0.875rem; /* text-sm */
+  font-weight: 400; /* font-normal */
+  font-family: "Roboto", sans-serif;
+  margin-bottom: 2.5rem; /* mb-10 (for step 1) or mb-6 (step 2) */
+  color: #4b5563; /* text-gray-600 */
+  text-align: center;
+}
+
+.subtitleStep2 {
+  margin-bottom: 1.5rem; /* mb-6 */
+}
+
+.checkboxGroup {
+  margin-bottom: 3.5rem; /* mb-14 */
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* space-y-4 */
+}
+
+.checkboxItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem; /* mb-5 for 첫번째 항목 */
+  font-size: 0.875rem; /* text-sm */
+  color: #374151; /* text-gray-700 */
+}
+
+.checkboxItemLast {
+  margin-bottom: 0; /* 마지막 체크박스는 마진 제거 */
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.checkboxInput[type="checkbox"] {
+  accent-color: #8CC766;
+}
+
+.textLabel {
+  font-size: 0.875rem; /* text-sm */
+  color: #374151; /* text-gray-700 */
+}
+
+.button {
+  width: 100%;
+  padding: 0.75rem 0; /* py-3 */
+  border-radius: 1rem; /* rounded-xl */
+  font-family: "Roboto", sans-serif;
+  font-size: 0.875rem; /* text-sm */
+  font-weight: 400;
+  transition: background-color 0.3s ease;
+  cursor: pointer;
+  border: none;
+  outline: none;
+}
+
+.buttonEnabled {
+  background-color: #A4D17A;
+  color: #1E2F23;
+}
+
+.buttonEnabled:hover {
+  background-color: #8CC766;
+}
+
+.buttonDisabled {
+  background-color: #d1d5db; /* gray-300 */
+  color: #6b7280; /* gray-500 */
+  cursor: not-allowed;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; /* space-y-4 */
+}
+
+.formGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.label {
+  font-size: 0.875rem; /* text-sm */
+  font-weight: 500; /* font-medium */
+  margin-bottom: 0.25rem; /* mb-1 */
+  color: #374151; /* text-gray-700 */
+}
+
+.input {
+  width: 100%;
+  padding: 0.5rem 0.75rem; /* px-3 py-2 */
+  border: 1px solid #d1d5db; /* border-gray-300 */
+  border-radius: 1rem; /* rounded-xl */
+  font-size: 0.875rem; /* text-sm */
+  outline: none;
+  transition: box-shadow 0.2s ease;
+  font-family: inherit;
+}
+
+.input::placeholder {
+  font-size: 0.75rem; /* placeholder:text-xs */
+}
+
+.input:focus {
+  box-shadow: 0 0 0 2px #8CC766; /* focus:ring-2 focus:ring-[#151A54] */
+  border-color: #8CC766;
+}
