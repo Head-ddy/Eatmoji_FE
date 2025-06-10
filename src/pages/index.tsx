@@ -1,11 +1,15 @@
+/* eslint-disable @next/next/no-img-element */
 import Head from "next/head";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import style from "./index.module.css";
 import sharedStyle from "@/styles/shared.module.css";
+import { useTokenStore } from "@/store/tokenStore";
 
 export default function Home() {
   const router = useRouter();
+  const accessToken = useTokenStore((state) => state.accessToken);
+  const clearTokens = useTokenStore((state) => state.clearTokens);
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -15,6 +19,11 @@ export default function Home() {
 
     return () => clearTimeout(timer);
   }, []);
+
+  const handleLogout = () => {
+    clearTokens();
+    router.push("/");
+  };
   
   return (
     <>
@@ -37,18 +46,31 @@ export default function Home() {
         <button
           type="button"
           className={style.buttonStart}
-          onClick={() => router.push('/main')}
+          onClick={() => router.push("/main")}
         >
-          <p className="text-black text-center font-inter text-[16px] font-medium tracking-wide leading-none">로그인없이</p>
-          <div className="text-black text-center font-inter text-[40px] font-semibold tracking-tight leading-none">시작하기</div>  
+          <p className="text-black text-center font-inter text-[16px] font-medium tracking-wide leading-none">
+            로그인없이
+          </p>
+          <div className="text-black text-center font-inter text-[40px] font-semibold tracking-tight leading-none">
+            시작하기
+          </div>
         </button>
-        <button
-          type="button"
-          className={style.buttonLogin}
-          onClick={() => router.push('/login')}
-        >
-          <p>로그인 / 회원가입</p>
-        </button>
+
+        {!accessToken ? (
+          <>
+            <button
+              type="button"
+              className={style.buttonLogin}
+              onClick={() => router.push("/login")}
+            >
+              <p>로그인 / 회원가입</p>
+            </button>
+          </>
+        ) : (
+          <button type="button" className={style.buttonLogin} onClick={handleLogout}>
+            <p>로그아웃</p>
+          </button>
+        )}
       </div>
     </>
   );

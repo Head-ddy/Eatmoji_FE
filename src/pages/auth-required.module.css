@@ -1,0 +1,23 @@
+.logo {
+  width: 180px;
+  height: 145px;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.1));
+  margin-bottom: 20px;
+}
+
+.loginButton {
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background-color: #57c278;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.loginButton:hover {
+  background-color: #45a267;
+}
