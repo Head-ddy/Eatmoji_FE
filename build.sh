@@ -10,4 +10,4 @@ rm -rf output
 mkdir output
 
 # eatmoji 디렉토리만 복사
-cp -R eatmoji/. output/
+cp -R eatmoji/* output/

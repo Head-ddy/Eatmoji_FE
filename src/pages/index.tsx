@@ -43,21 +43,21 @@ export default function Home() {
           src="/favicon_logo.png" 
           alt="Logo" 
         />
-        <button
-          type="button"
-          className={style.buttonStart}
-          onClick={() => router.push("/main")}
-        >
-          <p className="text-black text-center font-inter text-[16px] font-medium tracking-wide leading-none">
-            로그인없이
-          </p>
-          <div className="text-black text-center font-inter text-[40px] font-semibold tracking-tight leading-none">
-            시작하기
-          </div>
-        </button>
 
         {!accessToken ? (
           <>
+            <button
+              type="button"
+              className={style.buttonStart}
+              onClick={() => router.push("/main")}
+            >
+              <p className="text-black text-center font-inter text-[16px] font-medium tracking-wide leading-none">
+                로그인없이
+              </p>
+              <div className="text-black text-center font-inter text-[40px] font-semibold tracking-tight leading-none">
+                시작하기
+              </div>
+            </button>
             <button
               type="button"
               className={style.buttonLogin}
@@ -67,9 +67,20 @@ export default function Home() {
             </button>
           </>
         ) : (
-          <button type="button" className={style.buttonLogin} onClick={handleLogout}>
-            <p>로그아웃</p>
-          </button>
+          <>
+            <button
+              type="button"
+              className={style.buttonStart}
+              onClick={() => router.push("/main")}
+            >
+              <div className="text-black text-center font-inter text-[40px] font-semibold tracking-tight leading-none">
+                시작하기
+              </div>
+            </button>
+            <button type="button" className={style.buttonLogin} onClick={handleLogout}>
+              <p>로그아웃</p>
+            </button>
+          </>
         )}
       </div>
     </>
