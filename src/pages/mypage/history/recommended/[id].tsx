@@ -7,7 +7,6 @@ import { addressOptions, districts } from "@/data/regions";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import { useRouter } from "next/router";
 import { HistoryItem } from "@/types/history";
-import historyData from "@/mock/history.json";
 
 export default function HistoryDetail() {
   const router = useRouter();
@@ -19,15 +18,17 @@ export default function HistoryDetail() {
   const [isFavorite, setIsFavorite] = useState(false);
 
   useEffect(() => {
-    if (id && typeof id === 'string') {
-        const item = historyData.find((item) => item.id === id);
-        if (item) {
-            setSelectedItem(item);
-            const key = `favorite_${item.recommendation.food}`;
-            setIsFavorite(!!localStorage.getItem(key));
+    if (id && typeof id === "string") {
+        const stored = sessionStorage.getItem("selectedHistoryItem");
+        if (stored) {
+        const item: HistoryItem = JSON.parse(stored);
+        setSelectedItem(item);
+
+        const key = `favorite_${item.recommendation.food}`;
+        setIsFavorite(!!localStorage.getItem(key));
         }
     }
-  }, [id]);
+    }, [id]);
 
   const openModal = () => setIsOpen(true);
   const closeModal = () => setIsOpen(false);

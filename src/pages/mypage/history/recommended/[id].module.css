@@ -27,6 +27,8 @@
   flex-direction: column;
   gap: 39px;
   align-items: center;
+  padding-top: 20px;
+  margin-bottom: 80px;
 }
 
 .backButton {
@@ -105,6 +107,7 @@
 }
 
 .label {
+  min-width: 29.45px;
   font-weight: 500;
   color: #888;
 }
@@ -147,7 +150,7 @@
 
 .menulinkButton {
   margin-top: 20px;
-  padding: 12px 24px;
+  padding: 16px 20px;
   background-color: #f9dd94;
   border-radius: 20px;
   font-weight: 600;

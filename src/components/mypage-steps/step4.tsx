@@ -3,6 +3,8 @@ import sharedStyle from "@/styles/shared.module.css";
 import style from "./step4.module.css";
 import { useState } from "react";
 import { useRouter } from "next/router";
+import { updateProfileRequest } from "@/lib/api/profile";
+import { useTokenStore } from "@/store/tokenStore";
 
 export default function Step4({ 
   goToStep, 
@@ -17,9 +19,9 @@ export default function Step4({
   answer2: string[];
   answer3: string[];
 }) {
-  const router = useRouter();
   const options = [ "땅콩", "대두", "호두", "캐슈넛", "생선", "갑각류", "밀", "우유", "사과", "복숭아", "바나나", ];
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
+  const router = useRouter();
 
   const handleTag = (option: string) => {
     if (selectedOptions.includes(option)) {
@@ -29,15 +31,32 @@ export default function Step4({
     }
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     setAnswer4(selectedOptions);
-    const query: { [key: string]: string } = {
-      category: JSON.stringify(answer1),
-      flavor: JSON.stringify(answer2),
-      disease: JSON.stringify(answer3),
-      allergy: JSON.stringify(selectedOptions),
+
+    const accessToken = useTokenStore.getState().accessToken;
+
+    if (!accessToken) {
+      alert("로그인이 필요합니다.");
+      return;
+    }
+
+    const requestBody = {
+      category: answer1,
+      flavor: answer2,
+      disease: answer3,
+      allergy: selectedOptions,
     };
-    router.push({ pathname: "/mypage/profile", query });
+
+    try {
+      const result = await updateProfileRequest(requestBody);
+      console.log("Update successful:", result);
+      alert("프로필이 저장되었습니다!");
+      router.push("/mypage/profile"); // 저장 후 이동할 페이지
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      alert("저장 중 오류가 발생했습니다.");
+    }
   };
 
   return (

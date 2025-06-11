@@ -1,26 +1,41 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { ReactNode, useEffect } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { useTokenStore } from '@/store/tokenStore';
 
 interface AuthWrapperProps {
   children: ReactNode;
 }
 
-const publicPaths = ['/', '/main', '/login', '/signup', '/auth-required']; // 보호하지 않는 경로들
+const publicPaths = ['/', '/main', '/login', '/signup', '/auth-required'];
 
 export default function AuthWrapper({ children }: AuthWrapperProps) {
   const router = useRouter();
-  const accessToken = useTokenStore((state) => state.accessToken);
+  const [accessToken, setAccessToken] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    if (!accessToken && !publicPaths.includes(router.pathname)) {
-        router.replace(`/auth-required?from=${router.pathname}`);
+    try {
+      const stored = localStorage.getItem('token-storage');
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        setAccessToken(parsed?.state?.accessToken ?? null);
+      }
+    } catch (e) {
+      console.error("로컬스토리지 파싱 오류:", e);
+    } finally {
+      setIsLoading(false);
     }
-  }, [accessToken, router.pathname]);
+  }, []);
 
-  if (!accessToken && !publicPaths.includes(router.pathname)) {
-    return null; // 토큰 없으면 아무것도 렌더링하지 않음
+  useEffect(() => {
+    if (!isLoading && !accessToken && !publicPaths.includes(router.pathname)) {
+      router.replace(`/auth-required?from=${router.pathname}`);
+      console.log("토큰 없음, 리다이렉트 수행");
+    }
+  }, [isLoading, accessToken, router.pathname]);
+
+  if (isLoading || (!accessToken && !publicPaths.includes(router.pathname))) {
+    return null; // 로딩 중이거나 인증이 안 된 경우 아무것도 렌더링하지 않음
   }
 
   return <>{children}</>;

@@ -5,15 +5,19 @@ import Step2 from "@/components/main-steps/step2";
 import Step3 from "@/components/main-steps/step3";
 import { useEffect, useState } from "react";
 import sharedStyle from "@/styles/shared.module.css";
+import { recommendByEmoji } from "@/lib/api/recommend";
+import type { RecommendResponse } from "@/types/recommend";
+import { useTokenStore } from "@/store/tokenStore";
 
 export default function Main() {
   const [step, setStep] = useState(1);
   const [answer1, setAnswer1] = useState<string>("");
   const [answer2, setAnswer2] = useState<string>("");
-  const [result, setResult] = useState<string | null>(null);
+  const [result, setResult] = useState<RecommendResponse | null>(null);
 
   const nextStep = () => setStep((prev) => prev + 1);
   const goToStep = (stepNumber: number) => setStep(stepNumber);
+  const accessToken = useTokenStore(state => state.accessToken);
 
   useEffect(() => {
     console.log("result changed:", result);
@@ -24,29 +28,11 @@ export default function Main() {
     console.log("선택된 이모지:", selectedAnswer2);
 
     try {
-      // const response = await fetch("/api/recommend", {
-      //   method: "POST",
-      //   headers: {
-      //     "Content-Type": "application/json",
-      //   },
-      //   body: JSON.stringify({ answer2 }),
-      // });
-
-      // if (!response.ok) {
-      //   throw new Error("결과를 생성하는 데 실패했습니다.");
-      // }
-
-      // const data = await response.json();
-      // setResult(data.result);
-
-      // 로컬 더미 결과 (answer2 값 포함하여 출력 예시)
-      const dummyResult = `메뉴는 ${selectedAnswer2} 입니다!`;
-      // 실제 네트워크 호출 대신 1초 딜레이 후 결과 설정
-      await new Promise((res) => setTimeout(res, 1000));
-      setResult(dummyResult);
+      const data = await recommendByEmoji(selectedAnswer2, accessToken);
+      setResult(data);
     } catch (error) {
-      console.error("GPT 호출 실패:", error);
-      setResult("오류가 발생했어요. 다시 시도해 주세요.");
+      console.error("추천 API 호출 실패:", error);
+      setResult(null);
     }
   };
 

@@ -5,11 +5,13 @@ import { useEffect, useState } from "react";
 import style from "./index.module.css";
 import sharedStyle from "@/styles/shared.module.css";
 import { useTokenStore } from "@/store/tokenStore";
+import { useUserStore } from "@/store/userStore";
 
 export default function Home() {
   const router = useRouter();
   const accessToken = useTokenStore((state) => state.accessToken);
   const clearTokens = useTokenStore((state) => state.clearTokens);
+  const clearUser = useUserStore((state) => state.clearUser);
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
@@ -22,6 +24,7 @@ export default function Home() {
 
   const handleLogout = () => {
     clearTokens();
+    clearUser();
     router.push("/");
   };
   

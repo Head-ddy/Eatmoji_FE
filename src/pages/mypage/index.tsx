@@ -2,9 +2,11 @@ import Head from "next/head";
 import sharedStyle from "@/styles/shared.module.css";
 import style from "./index.module.css";
 import { useRouter } from "next/router";
+import { useUserStore } from "@/store/userStore";
 
 export default function Mypage() {
     const router = useRouter();
+    const email = useUserStore((state) => state.email);
     
     return (
         <>
@@ -19,8 +21,8 @@ export default function Mypage() {
 
                 <div className={style.profileBox}>
                     <div className={style.profileIcon}>🍽️</div>
-                    <div className={style.nickname}>닉네임</div>
-                    <div className={style.email}>nickname@gmail.com</div>
+                    <div className={style.nickname}>이메일</div>
+                    <div className={style.email}>{email}</div>
                 </div>
 
                 <div className={style.menuList}>

@@ -2,21 +2,34 @@ import Head from "next/head";
 import sharedStyle from "@/styles/shared.module.css";
 import style from "./index.module.css";
 import { useRouter } from "next/router";
-import { useMemo } from "react";
+import { useUserStore } from "@/store/userStore";
+import { useEffect, useState } from "react";
+import { UserProfileData } from "@/types/profile";
+import { getProfile } from "@/lib/api/profile";
 
 export default function Profile() {
     const router = useRouter();
+    const email = useUserStore((state) => (state.email));
 
-    const { category, flavor, disease, allergy } = router.query;
+    const [profile, setProfile] = useState<UserProfileData>({
+        category: [],
+        flavor: [],
+        disease: [],
+        allergy: [],
+    });
 
-    const parsedData = useMemo(() => {
-        return {
-            category: category ? JSON.parse(category as string) : [],
-            flavor: flavor ? JSON.parse(flavor as string) : [],
-            disease: disease ? JSON.parse(disease as string) : [],
-            allergy: allergy ? JSON.parse(allergy as string) : [],
+    useEffect(() => {
+        const fetchProfile = async () => {
+        try {
+            const data = await getProfile();
+            setProfile(data);
+        } catch (error) {
+            console.error("프로필 불러오기 실패:", error);
+        }
         };
-    }, [category, flavor, disease, allergy]);
+
+        fetchProfile();
+    }, []);
 
     return (
         <>
@@ -34,8 +47,7 @@ export default function Profile() {
                     <div className={style.iconWrapper}>
                         <div className={style.profileIcon}>🍽️</div>
                     </div>
-                        <div className={style.label}>닉네임</div>
-                        <div className={style.label}>nickname@gmail.com</div>
+                        <div className={style.label}>{email}</div>
                 </div>
 
                 <hr className={style.separator} />
@@ -44,7 +56,7 @@ export default function Profile() {
                     <div className={style.tagbox}>
                         <span className={style.tagLabel}>카테고리</span>
                         <div className={style.tagGroup}>
-                            {parsedData.category.map((item: string, idx: number) => (
+                            {profile.category.map((item: string, idx: number) => (
                                 <span key={idx} className={style.tag}>{item}</span>
                             ))}
                         </div>
@@ -52,7 +64,7 @@ export default function Profile() {
                     <div className={style.tagbox}>
                         <span className={style.tagLabel}>맛</span>
                         <div className={style.tagGroup}>
-                            {parsedData.flavor.map((item: string, idx: number) => (
+                            {profile.flavor.map((item: string, idx: number) => (
                                 <span key={idx} className={style.tag}>{item}</span>
                             ))}
                         </div>
@@ -60,7 +72,7 @@ export default function Profile() {
                     <div className={style.tagbox}>
                         <span className={style.tagLabel}>식이요법</span>
                         <div className={style.tagGroup}>
-                            {parsedData.disease.map((item: string, idx: number) => (
+                            {profile.disease.map((item: string, idx: number) => (
                                 <span key={idx} className={style.tag}>{item}</span>
                             ))}
                         </div>
@@ -68,7 +80,7 @@ export default function Profile() {
                     <div className={style.tagbox}>
                         <span className={style.tagLabel}>알레르기</span>
                         <div className={style.tagGroup}>
-                            {parsedData.allergy.map((item: string, idx: number) => (
+                            {profile.allergy.map((item: string, idx: number) => (
                                 <span key={idx} className={style.tag}>{item}</span>
                             ))}
                         </div>
@@ -78,7 +90,6 @@ export default function Profile() {
                 <button className={style.retryButton} onClick={() => router.push('/mypage/profile/personalInfo')}>다시 입력하기</button>
 
                 <hr className={style.separator} />
-                <button className={style.saveButton}>저장</button>
             </div>
         </>
     );
