@@ -6,7 +6,7 @@ import { useRouter } from "next/router";
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
-  const publicPaths = ["/main", "/login", "/signup", "/auth-required", "/recipe-error"];
+  const publicPaths = ["/main", "/login", "/signup", "/auth-required", "/recipe-error", "/404"];
 
   // 현재 경로가 공개 경로인지 확인
   const isPublicPage = publicPaths.some((path) =>
