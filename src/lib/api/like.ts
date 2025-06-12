@@ -15,10 +15,10 @@ export async function toggleLikeHistoryItem(id: string): Promise<boolean> {
     throw new Error(`Failed to update like status for history item ${id}`);
   }
 
-  const data = await response.json();
-
-  if (data.likeStatus === true) return true;
-  if (data.likeStatus === false) return false;
+  const text = await response.text();
+  
+  if (text.includes('true')) return true;
+  if (text.includes('false')) return false;
 
   throw new Error('Unexpected response from server');
 }
