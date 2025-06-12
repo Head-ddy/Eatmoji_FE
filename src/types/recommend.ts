@@ -1,8 +1,9 @@
 export interface RecommendResponse {
   emotion: string;
-  intensity: number;
+  intensity?: number;
   recommendations: {
     food: string;
     reason: string;
   }[];
+  historyId?: string;
 }

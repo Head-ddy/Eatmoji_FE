@@ -7,6 +7,8 @@ import { addressOptions, districts } from "@/data/regions";
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 import { useRouter } from "next/router";
 import { HistoryItem } from "@/types/history";
+import { toggleLikeHistoryItem } from "@/lib/api/like";
+import { useTokenStore } from "@/store/tokenStore";
 
 export default function HistoryDetail() {
   const router = useRouter();
@@ -42,9 +44,9 @@ export default function HistoryDetail() {
     if (!selectedItem) return;
     const query = `${selectedCity} ${selectedDistrict} ${selectedItem.recommendation.food}`;
     const encodedQuery = encodeURIComponent(query);
-    const url = `https://map.kakao.com/?=${encodedQuery}`;
+    const url = `https://map.kakao.com/?q=${encodedQuery}`;
 
-    window.open(url, '_black');
+    window.open(url, '_blank');
   }
 
   useEffect(() => {
@@ -53,15 +55,22 @@ export default function HistoryDetail() {
     }
     }, [selectedItem]);
 
-  const handleFavorite = () => {
+  const handleFavorite = async (historyId: string) => {
+    const accessToken = useTokenStore.getState().accessToken;
+
+    if (!accessToken) {
+      alert('로그인 후 이용 부탁드립니다.');
+      return;
+    }
+
     if (!selectedItem) return;
-    const key = `favorite_${selectedItem.id}`;
-    if (isFavorite) {
-      localStorage.removeItem(key);
-      setIsFavorite(false);
-    } else {
-      localStorage.setItem(key, "true");
-      setIsFavorite(true);
+
+    try {
+      const newLikeStatus = await toggleLikeHistoryItem(historyId);
+      setIsFavorite(newLikeStatus);
+      console.log('Like 상태가 변경되었습니다:', newLikeStatus);
+    } catch (error) {
+      console.error('Like 상태 변경 중 오류 발생:', error);
     }
   }
 
@@ -89,13 +98,13 @@ export default function HistoryDetail() {
             <button className={style.backButton} onClick={() => router.back()}>
                 목록으로
             </button>
-            <button className={style.favoriteButton} onClick={handleFavorite}>
+            <button className={style.favoriteButton} onClick={() => handleFavorite(selectedItem.id)}>
                 {isFavorite ? (
                     <AiFillStar size={24} color="#FFD700" />
                 ) : (
                     <AiOutlineStar size={24} color="#ccc" />
                 )}
-                즐겨찾기
+                좋아요
             </button>
             <div className={style.content}>
                 <img className={style.image} src="/favicon_logo.png" alt="Logo" />

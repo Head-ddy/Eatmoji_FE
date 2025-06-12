@@ -20,11 +20,12 @@
 .historyList {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-  width: 85%;
+  gap: 16px;
+  width: 90%;
 }
 
 .historyCard {
+  width: 145px;
   padding: 16px;
   border: 1px solid #ccc;
   border-radius: 12px;
@@ -38,17 +39,17 @@
 }
 
 .emoji {
-  font-size: 24px;
+  font-size: 20px;
 }
 
 .food {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
   margin-top: 4px;
 }
 
 .date {
-  font-size: 12px;
+  font-size: 10px;
   color: gray;
   margin-top: 4px;
 }

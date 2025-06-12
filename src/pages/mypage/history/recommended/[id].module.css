@@ -27,7 +27,8 @@
   flex-direction: column;
   gap: 39px;
   align-items: center;
-  padding-top: 20px;
+  padding-top: 100px;
+  padding-bottom: 20px;
   margin-bottom: 80px;
 }
 
