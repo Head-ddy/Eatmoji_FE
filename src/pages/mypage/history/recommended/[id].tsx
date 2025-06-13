@@ -9,6 +9,7 @@ import { useRouter } from "next/router";
 import { HistoryItem } from "@/types/history";
 import { toggleLikeHistoryItem } from "@/lib/api/like";
 import { useTokenStore } from "@/store/tokenStore";
+import { fetchRecipeByFood } from "@/lib/api/recipe";
 
 export default function HistoryDetail() {
   const router = useRouter();
@@ -39,6 +40,32 @@ export default function HistoryDetail() {
     setSelectedCity(e.target.value);
     setSelectedDistrict("");
   }
+
+  const goToMake = async () => {
+    const rawFood = selectedItem?.recommendation.food;
+    if (!rawFood) {
+      alert("추천된 음식 정보가 없습니다.");
+      return;
+    }
+
+    const cleanFood = rawFood.replace(/\s/g, "");
+    console.log("푸드:", cleanFood);
+
+    try {
+      const url = await fetchRecipeByFood(cleanFood);
+      if (url === "Error: Recipe not found") {
+        router.push("/recipe-error"); // 에러 페이지로 이동
+        return;
+      }
+      if (!url.startsWith("http")) {
+        throw new Error("잘못된 링크 형식입니다.");
+      }
+      window.open(url, "_blank");
+    } catch (error) {
+      console.error("레시피 링크 호출 실패:", error);
+      alert("레시피 정보를 불러오는 데 실패했습니다.");
+    }
+  };
 
   const goToEat = () => {
     if (!selectedItem) return;
@@ -144,7 +171,7 @@ export default function HistoryDetail() {
                 </div>
             </div>
             <div className={style.buttonContainer}>
-                <button className={`${style.menulinkButton} ${style.makeButton}`}>
+                <button className={`${style.menulinkButton} ${style.makeButton}`} onClick={goToMake}>
                     만들러가기
                 </button>
                 <button className={`${style.menulinkButton} ${style.goEatButton}`} onClick={openModal}>
@@ -196,5 +223,5 @@ export default function HistoryDetail() {
             </div>
         </div>
     </>
-);
+    );
 }
