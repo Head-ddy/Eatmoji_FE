@@ -11,11 +11,11 @@ export default function Step2({answer1, goToStep, setAnswer2, generateResult} : 
   const getEmotionByAnswer1 = (answer1: string): string[] => {
     switch (answer1) {
       case "기쁨":
-        return ["😀", "😆", "🤣", "😊", "😍", "🙂"];
+        return ["😀", "😆", "😉", "😊", "😍", "😜"];
       case "슬픔":
         return ["😢", "😥", "😭"];
       case "화남":
-        return ["😠", "😡", "😑", "😒", "🙄"];
+        return ["😠", "😡", "😑", "😒", "😕"];
       case "편안":
         return ["😌", "😐", "😇"];
       case "아픔":
